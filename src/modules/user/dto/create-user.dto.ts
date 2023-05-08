@@ -1,4 +1,4 @@
-import { RoleName } from "src/modules/role/dto/main-role.dto";
+import { RoleName } from "src/common/types/role.types";
 
 export class CreateUserDto {
     firstName: string;

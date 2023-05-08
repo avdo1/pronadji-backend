@@ -1,6 +1,6 @@
+import { RoleName } from "src/common/types/role.types";
 import { User } from "src/modules/user/entities/user.entity";
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm";
-import { RoleName } from "../dto/main-role.dto";
 
 @Entity()
 export class Role {

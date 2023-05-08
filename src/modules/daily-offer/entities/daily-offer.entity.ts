@@ -1,8 +1,8 @@
+import { DailyOfferStatus } from "src/common/types/dailyOffer.types";
 import { Category } from "src/modules/category/entities/category.entity";
 import { MainLocal } from "src/modules/main-local/entities/main-local.entity";
 import { Product } from "src/modules/product/entities/product.entity";
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany} from "typeorm";
-import { DailyOfferStatus } from "../dto/main-dto.dto";
 
 @Entity()
 export class DailyOffer {
