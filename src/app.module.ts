@@ -19,7 +19,23 @@ import { dataSourceOptions } from 'db/data-source';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UserModule, RoleModule, PaymentsModule, CategoryModule, MainLocalModule, EventModule, ProductModule, DailyOfferModule, JobOfferModule, PhotoModule, GalleryModule, PhotographModule, PhotographsPhotoModule, SubcategoryModule],
+  imports: [
+    TypeOrmModule.forRoot(dataSourceOptions),
+    UserModule,
+    RoleModule,
+    PaymentsModule,
+    CategoryModule,
+    MainLocalModule,
+    EventModule,
+    ProductModule,
+    DailyOfferModule,
+    JobOfferModule,
+    PhotoModule,
+    GalleryModule,
+    PhotographModule,
+    PhotographsPhotoModule,
+    SubcategoryModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

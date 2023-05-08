@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MainLocalService } from './main-local.service';
 import { CreateMainLocalDto } from './dto/create-main-local.dto';
 import { UpdateMainLocalDto } from './dto/update-main-local.dto';
@@ -23,7 +31,10 @@ export class MainLocalController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMainLocalDto: UpdateMainLocalDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMainLocalDto: UpdateMainLocalDto,
+  ) {
     return this.mainLocalService.update(+id, updateMainLocalDto);
   }
 

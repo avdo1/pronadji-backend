@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PhotographsPhotoService } from './photographs-photo.service';
 import { CreatePhotographsPhotoDto } from './dto/create-photographs-photo.dto';
 import { UpdatePhotographsPhotoDto } from './dto/update-photographs-photo.dto';
 
 @Controller('photographs-photo')
 export class PhotographsPhotoController {
-  constructor(private readonly photographsPhotoService: PhotographsPhotoService) {}
+  constructor(
+    private readonly photographsPhotoService: PhotographsPhotoService,
+  ) {}
 
   @Post()
   create(@Body() createPhotographsPhotoDto: CreatePhotographsPhotoDto) {
@@ -23,7 +33,10 @@ export class PhotographsPhotoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePhotographsPhotoDto: UpdatePhotographsPhotoDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePhotographsPhotoDto: UpdatePhotographsPhotoDto,
+  ) {
     return this.photographsPhotoService.update(+id, updatePhotographsPhotoDto);
   }
 

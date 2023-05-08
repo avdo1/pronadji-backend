@@ -4,6 +4,6 @@ import { MainLocalController } from './main-local.controller';
 
 @Module({
   controllers: [MainLocalController],
-  providers: [MainLocalService]
+  providers: [MainLocalService],
 })
 export class MainLocalModule {}

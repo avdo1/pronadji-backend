@@ -1,4 +1,4 @@
 export enum CategoryName {
-    Kafic = "Kafic",
-    NargilaBar = "Nargila bar"
+  Kafic = 'Kafic',
+  NargilaBar = 'Nargila bar',
 }

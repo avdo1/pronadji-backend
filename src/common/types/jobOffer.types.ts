@@ -1,4 +1,4 @@
 export enum JobOfferStatus {
-    active = "Active",
-    inActive = "Inactive"
+  active = 'Active',
+  inActive = 'Inactive',
 }

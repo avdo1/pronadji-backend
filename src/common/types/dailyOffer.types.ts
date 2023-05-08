@@ -1,4 +1,4 @@
 export enum DailyOfferStatus {
-    active = "Active",
-    inActive = "Inactive"
+  active = 'Active',
+  inActive = 'Inactive',
 }

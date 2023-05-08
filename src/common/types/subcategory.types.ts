@@ -1,4 +1,4 @@
 export enum SubcatergoryName {
-    Kafa = "Kafa",
-    Nargila = "Nargila"
+  Kafa = 'Kafa',
+  Nargila = 'Nargila',
 }
