@@ -1,7 +1,7 @@
+import { JobOfferStatus } from "src/common/types/jobOffer.types";
 import { MainLocal } from "src/modules/main-local/entities/main-local.entity";
 import { Product } from "src/modules/product/entities/product.entity";
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany} from "typeorm";
-import { JobOfferStatus } from "../dto/main-dto.dto";
 
 @Entity()
 export class JobOffer {

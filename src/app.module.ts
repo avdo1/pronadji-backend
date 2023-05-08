@@ -16,9 +16,10 @@ import { PhotographModule } from './modules/photograph/photograph.module';
 import { PhotographsPhotoModule } from './modules/photographs-photo/photographs-photo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'db/data-source';
+import { SubcategoryModule } from './modules/subcategory/subcategory.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UserModule, RoleModule, PaymentsModule, CategoryModule, MainLocalModule, EventModule, ProductModule, DailyOfferModule, JobOfferModule, PhotoModule, GalleryModule, PhotographModule, PhotographsPhotoModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), UserModule, RoleModule, PaymentsModule, CategoryModule, MainLocalModule, EventModule, ProductModule, DailyOfferModule, JobOfferModule, PhotoModule, GalleryModule, PhotographModule, PhotographsPhotoModule, SubcategoryModule],
   controllers: [AppController],
   providers: [AppService],
 })
