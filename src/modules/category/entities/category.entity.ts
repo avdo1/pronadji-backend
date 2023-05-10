@@ -10,7 +10,7 @@ export class Category {
   @Column('text')
   public description: string;
 
-  @Column('enum', { enum: CategoryName })
+  @Column('text')
   public categoryName: CategoryName;
 
   @OneToMany(() => Product, (product) => product.category)

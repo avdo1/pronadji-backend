@@ -26,7 +26,7 @@ export class JobOffer {
   @Column('text')
   public phone: string;
 
-  @Column('enum', { enum: JobOfferStatus })
+  @Column('text')
   public status: JobOfferStatus;
 
   @OneToMany(() => Product, (product) => product.dailyOffer)
