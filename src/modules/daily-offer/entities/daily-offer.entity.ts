@@ -15,7 +15,7 @@ export class DailyOffer {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column('enum', { enum: DailyOfferStatus })
+  @Column('text')
   public status: DailyOfferStatus;
 
   @Column('decimal')

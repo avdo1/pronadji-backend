@@ -7,7 +7,7 @@ export class Role {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @Column('enum', { enum: RoleName })
+  @Column('text')
   public roleName: RoleName;
 
   @OneToMany(() => User, (user) => user.role)

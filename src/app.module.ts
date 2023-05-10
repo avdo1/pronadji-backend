@@ -15,12 +15,29 @@ import { GalleryModule } from './modules/gallery/gallery.module';
 import { PhotographModule } from './modules/photograph/photograph.module';
 import { PhotographsPhotoModule } from './modules/photographs-photo/photographs-photo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { dataSourceOptions } from 'db/data-source';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
+import { CustomConfigService } from './config/config.service';
+import { ConfigModule } from '@nestjs/config';
+import CustomConfigModule from './config/config.module';
+import configuration from './config/configuration';
+import { validate } from './common/validations/dbConfig.validation';
+import * as path from 'path';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(dataSourceOptions),
+    CustomConfigModule,
+    ConfigModule.forRoot({
+      envFilePath: path.join(process.cwd(), `${process.env.NODE_ENV}.env`),
+      isGlobal: true,
+      load: [configuration],
+      validate,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (customConfigService: CustomConfigService) =>
+        customConfigService.getTypeORMDatabaseConfig(),
+      inject: [CustomConfigService],
+    }),
     UserModule,
     RoleModule,
     PaymentsModule,

@@ -7,7 +7,7 @@ export class Subcategory {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column('enum', { enum: SubcatergoryName })
+  @Column('text')
   public name: string;
 
   @ManyToOne(() => MainLocal, (mainLocal) => mainLocal, {
