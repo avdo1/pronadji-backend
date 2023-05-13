@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import base from '../base';
 import nonprod from '../nonprod';
-import prod from '../nonprod';
-import { isProd } from './utils';
+import prod from '../prod';
+export const isProd = () => ['p', 'u'].includes(process.env['ENV_NAME'] || 'a');
 
 let data;
 

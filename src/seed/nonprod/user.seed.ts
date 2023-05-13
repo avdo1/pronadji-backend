@@ -1,27 +1,29 @@
-import { faker } from '@faker-js/faker';
-import { v4 as uuid } from 'uuid';
+export const userSeedData = [
+  {
+    id: '00000000-0000-4000-a000-000000000001',
+    nickName: 'Joe Rogan',
+    email: 'joe.rogan@gmail.com',
+    password: '$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2',
+    firstName: 'Joe',
+    lastName: 'Rogan'
+  },
+  {
+    id: '00000000-0000-4000-a000-000000000002',
+    nickName: 'Mark Hunt and Deep Mind',
+    email: 'mark.hunt@gmail.com',
+    password: '$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2',
+    firstName: 'Mark',
+    lastName: 'Hunt',
+   
+  },
+  {
+    id: '00000000-0000-4000-a000-000000000003',
+    nickName: 'Jenny',
+    email: 'jenny23@gmail.com',
+    password: '$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2',
+    firstName: 'Janny',
+    lastName: 'Janny'
+  },
+];
 
-class UserData {
-  public educations = [];
-  public generateEducations(investorsNum, num) {
-    Array(investorsNum)
-      .fill(0)
-      .forEach((s, sIndex) => {
-        Array(num)
-          .fill(0)
-          .forEach(() => {
-            this.educations.push({
-              id: uuid(),
-              school: faker.company.name(),
-              degree: faker.name.jobArea(),
-              startYear: faker.datatype.number({ min: 2000, max: 2010 }),
-              endYear: faker.datatype.number({ min: 2015, max: 2022 }),
-              shortDescription: faker.lorem.paragraph(1),
-            });
-          });
-      });
-  }
-}
-
-const userData = new UserData();
-export { userData };
+export type UserSeedData = (typeof userSeedData)[0];
