@@ -11,7 +11,9 @@ describe('PhotographsPhotoController', () => {
       providers: [PhotographsPhotoService],
     }).compile();
 
-    controller = module.get<PhotographsPhotoController>(PhotographsPhotoController);
+    controller = module.get<PhotographsPhotoController>(
+      PhotographsPhotoController,
+    );
   });
 
   it('should be defined', () => {

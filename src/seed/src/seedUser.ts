@@ -1,6 +1,6 @@
 import { User } from '../../modules/user/entities/user.entity';
 import { UserRepository } from '../../modules/user/user.repository';
-import bcrypt from 'bcrypt';
+
 import { userSeedData } from '../nonprod/user.seed';
 
 export const seedUser = async (db): Promise<void> => {
@@ -18,7 +18,7 @@ export const seedUser = async (db): Promise<void> => {
       if (!user) {
         user = new User();
       }
-      const passwordHash = await bcrypt.hash(data.password, 12);
+      const passwordHash = data.password;
 
       Object.assign(user, { ...data, password: passwordHash });
       console.log('user', user);
