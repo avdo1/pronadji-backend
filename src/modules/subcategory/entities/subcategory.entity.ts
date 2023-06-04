@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { MainLocal } from 'src/modules/main-local/entities/main-local.entity';
-import { SubcatergoryName } from 'src/common/types/subcategory.types';
 
 @Entity()
 export class Subcategory {

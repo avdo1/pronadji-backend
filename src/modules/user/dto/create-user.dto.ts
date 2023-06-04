@@ -1,4 +1,5 @@
-import { RoleName } from 'src/common/types/role.types';
+
+import { Role } from 'src/modules/role/entities/role.entity';
 
 export class CreateUserDto {
   firstName: string;
@@ -6,5 +7,5 @@ export class CreateUserDto {
   nickName?: string;
   email: string;
   password: string;
-  role: RoleName;
+  roleId: string;
 }

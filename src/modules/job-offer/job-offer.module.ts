@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { JobOfferService } from './job-offer.service';
 import { JobOfferController } from './job-offer.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JobOfferRepository } from './job-offer.repository';
+import { JobOffer } from './entities/job-offer.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([JobOfferRepository])],
+  imports: [TypeOrmModule.forFeature([JobOffer])],
   controllers: [JobOfferController],
   providers: [JobOfferService],
 })

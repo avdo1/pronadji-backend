@@ -27,7 +27,7 @@ export class SubcategoryController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.subcategoryService.findOne(+id);
+    return this.subcategoryService.findOne(id);
   }
 
   @Patch(':id')
@@ -40,6 +40,6 @@ export class SubcategoryController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.subcategoryService.remove(+id);
+    return this.subcategoryService.remove(id);
   }
 }

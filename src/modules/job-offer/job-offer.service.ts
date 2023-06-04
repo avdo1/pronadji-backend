@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateJobOfferDto } from './dto/create-job-offer.dto';
 import { UpdateJobOfferDto } from './dto/update-job-offer.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { JobOffer } from './entities/job-offer.entity';
+import { Repository } from 'typeorm';
+import { DailyOffer } from '../daily-offer/entities/daily-offer.entity';
 
 @Injectable()
 export class JobOfferService {
-  create(createJobOfferDto: CreateJobOfferDto) {
-    return 'This action adds a new jobOffer';
+  constructor(
+    @InjectRepository(JobOffer)
+    private readonly repository: Repository<DailyOffer>,
+  ) {}
+  async create(createJobOfferDto: CreateJobOfferDto) {
+    return this.repository.create(createJobOfferDto);
   }
 
-  findAll() {
-    return `This action returns all jobOffer`;
+  async findAll() {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} jobOffer`;
+  async findOne(id: string) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updateJobOfferDto: UpdateJobOfferDto) {
-    return `This action updates a #${id} jobOffer`;
+  async update(id: string, updateJobOfferDto: UpdateJobOfferDto) {
+    const dailyOfferFromDatabase = await this.repository.findOne({
+      where: { id: id },
+    });
+    const updatedJobOffer = Object.assign(dailyOfferFromDatabase, updateJobOfferDto);
+    return this.repository.update(id, updatedJobOffer);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} jobOffer`;
+  async remove(id: string) {
+    const jobOffer = this.repository.findOne({ where: { id: id } });
+    return await this.repository.delete(id);
   }
 }

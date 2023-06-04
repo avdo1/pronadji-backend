@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { DailyOfferService } from './daily-offer.service';
 import { CreateDailyOfferDto } from './dto/create-daily-offer.dto';
 import { UpdateDailyOfferDto } from './dto/update-daily-offer.dto';
+import { JWTGuard } from 'src/lib/guards/jwt.guard';
 
 @Controller('daily-offer')
 export class DailyOfferController {
@@ -20,6 +22,7 @@ export class DailyOfferController {
     return this.dailyOfferService.create(createDailyOfferDto);
   }
 
+  @UseGuards(JWTGuard)
   @Get()
   findAll() {
     return this.dailyOfferService.findAll();
@@ -27,7 +30,7 @@ export class DailyOfferController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.dailyOfferService.findOne(+id);
+    return this.dailyOfferService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +38,11 @@ export class DailyOfferController {
     @Param('id') id: string,
     @Body() updateDailyOfferDto: UpdateDailyOfferDto,
   ) {
-    return this.dailyOfferService.update(+id, updateDailyOfferDto);
+    return this.dailyOfferService.update(id, updateDailyOfferDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.dailyOfferService.remove(+id);
+    return this.dailyOfferService.remove(id);
   }
 }

@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDailyOfferDto } from './dto/create-daily-offer.dto';
 import { UpdateDailyOfferDto } from './dto/update-daily-offer.dto';
+import { DailyOffer } from './entities/daily-offer.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DailyOfferService {
-  create(createDailyOfferDto: CreateDailyOfferDto) {
-    return 'This action adds a new dailyOffer';
+  constructor(
+    @InjectRepository(DailyOffer)
+    private readonly repository: Repository<DailyOffer>,
+  ) {}
+  async create(createdailyOfferDto: CreateDailyOfferDto) {
+    return this.repository.create(createdailyOfferDto);
   }
 
-  findAll() {
-    return `This action returns all dailyOffer`;
+  async findAll() {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dailyOffer`;
+  async findOne(id: string) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updateDailyOfferDto: UpdateDailyOfferDto) {
-    return `This action updates a #${id} dailyOffer`;
+  async update(id: string, updateDailyOfferDto: UpdateDailyOfferDto) {
+    const dailyOfferFromDatabase = await this.repository.findOne({
+      where: { id: id },
+    });
+    const updatedUser = Object.assign(dailyOfferFromDatabase, updateDailyOfferDto);
+    return this.repository.update(id, updatedUser);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} dailyOffer`;
+  async remove(id: string) {
+    const user = this.repository.findOne({ where: { id: id } });
+    return await this.repository.delete(id);
   }
 }

@@ -1,32 +1,56 @@
 import { Injectable } from '@nestjs/common';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
-import { UserRepository } from './user.repository';
-import { error } from 'console';
+import { ContextService } from 'src/core/context/context.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
-
-  create(createUserDto: CreateUserDto): Promise<User> {
-    return this.findOne(createUserDto.email);
-  }
-  findAll() {
-    return `This action returns all user`;
-  }
-
-  async findOne(id: string): Promise<User> {
-    const user = await this.userRepository.getUserById(id);
-    if (user) return user;
-    else throw error('Dont have');
+  constructor(
+    @InjectRepository(User)
+    private readonly repository: Repository<User>,
+    private readonly contextService: ContextService,
+  ) {}
+ 
+ async getOneByEmail(email:string){
+    return this.repository.findOne({where:{email:email}})
+ }
+  async findAll() {
+    return this.repository.find();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async getMe() {
+    const user = this.contextService.userContext.user;
+    
+    const userFromDatabase =
+      await this.repository.findOne({where:{email:user?.email}});
+    
+    return userFromDatabase;
+  } 
+  
+  async create(createUserDto: CreateUserDto) {
+    
+    const response =  this.repository.create(createUserDto);
+    if(!response) throw Error("Something wrong")
+
+    return this.repository.save(response);
+  }
+  async findOne(id: string) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const userFromDatabase = await this.repository.findOne({
+      where: { id: id },
+    });
+    const updatedUser = Object.assign(userFromDatabase, updateUserDto);
+    return this.repository.update(id, updatedUser);
+  }
+
+  async remove(id: string) {
+    const user = this.repository.findOne({ where: { id: id } });
+    return await this.repository.delete(id);
   }
 }

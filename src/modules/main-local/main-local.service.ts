@@ -1,26 +1,74 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMainLocalDto } from './dto/create-main-local.dto';
-import { UpdateMainLocalDto } from './dto/update-main-local.dto';
+import { SearchMainLocalDto, UpdateMainLocalDto } from './dto/update-main-local.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MainLocal } from './entities/main-local.entity';
+import { Repository } from 'typeorm';
+import { ContextService } from 'src/core/context/context.service';
 
 @Injectable()
 export class MainLocalService {
-  create(createMainLocalDto: CreateMainLocalDto) {
-    return 'This action adds a new mainLocal';
+  constructor(
+    @InjectRepository(MainLocal)
+    private readonly repository: Repository<MainLocal>,
+    private readonly contextService: ContextService
+  ) {}
+  async create(createMainLocalDto: CreateMainLocalDto) {
+    const user = this.contextService.userContext;
+   
+    let createdMainLocal = new MainLocal();
+
+    createdMainLocal=Object.assign(createMainLocalDto);
+    createdMainLocal.user= user.user;
+
+    if(!createdMainLocal || !createdMainLocal.user)
+      throw Error ("Error")
+
+    return await this.repository.save(createdMainLocal)
   }
 
-  findAll() {
-    return `This action returns all mainLocal`;
+  async findAll() {
+    return this.repository.find();
+  }
+  async findByUser(id:string) {
+    return this.repository.find({where:{user:{id:id}}});
+  }
+  async findBySearch(searchMainLocalDto:SearchMainLocalDto) {
+    let query = this.repository.createQueryBuilder('mainLocal').leftJoinAndSelect('mainLocal.subcategories', 'subCategory')
+    .leftJoinAndSelect('mainLocal.events', 'event')
+
+    if (searchMainLocalDto.name) {
+      query = query.andWhere('mainLocal.name LIKE :name', { name: `%${searchMainLocalDto.name}%` });
+    }
+
+    if (searchMainLocalDto.location) {
+      query = query.andWhere('mainLocal.location LIKE :location', { location: `%${searchMainLocalDto.location}%` });
+    }
+    if (searchMainLocalDto.event) {
+      query = query.andWhere('event.name  IN (:...name)', { name: `%${searchMainLocalDto.event}%` });
+    }
+    if (searchMainLocalDto.category) {
+      query = query.andWhere('subCategory.name IN (:...name)', { name: `%${searchMainLocalDto.category}%` });
+    }
+
+    return query.getMany()||[];
+  }
+  async findOne(id: string) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} mainLocal`;
+  async update(id: string, updateMainLocalDto: UpdateMainLocalDto) {
+    const mainLocalFromDatabase = await this.repository.findOne({
+      where: { id: id },
+    });
+    const updatedMainLocal = Object.assign(mainLocalFromDatabase, updateMainLocalDto);
+    const updatedData = await this.repository.update(id, updatedMainLocal);
+    return await this.repository.save(updatedMainLocal)
   }
 
-  update(id: number, updateMainLocalDto: UpdateMainLocalDto) {
-    return `This action updates a #${id} mainLocal`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} mainLocal`;
+  async remove(id: string) {
+    const mainLocal = await this.repository.findOne({ where: { id: id } });
+    if(!mainLocal) throw Error('Error');
+    return await this.repository.delete(mainLocal.id);
   }
 }

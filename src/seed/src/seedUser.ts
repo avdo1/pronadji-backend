@@ -1,6 +1,4 @@
 import { User } from '../../modules/user/entities/user.entity';
-import { UserRepository } from '../../modules/user/user.repository';
-
 import { userSeedData } from '../nonprod/user.seed';
 
 export const seedUser = async (db): Promise<void> => {
@@ -9,20 +7,17 @@ export const seedUser = async (db): Promise<void> => {
   if (!count) {
     return;
   }
-
-  console.log('\x1b[33m%s\x1b[0m', `Seeding Users (${count} items)`);
-  const repository: UserRepository = db.getCustomRepository(UserRepository);
+  //console.log('\x1b[33m%s\x1b[0m', `Seeding Users (${count} items)`,db);
+  const userRepository = db.getRepository(User);
   await Promise.all(
     seedData.map(async (data) => {
-      let user = await repository.getUserById(data.id);
+      let user = await userRepository.findOne({ where: { id: data.id } });
+      //console.log('===', data);
       if (!user) {
         user = new User();
       }
-      const passwordHash = data.password;
-
-      Object.assign(user, { ...data, password: passwordHash });
-      console.log('user', user);
-      //return repository.save(user);
+      // user = Object.assign(data);
+      // return userRepository.create(user);
     }),
   );
 }
