@@ -5,21 +5,23 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MainLocal } from './entities/main-local.entity';
 import { Repository } from 'typeorm';
 import { ContextService } from 'src/core/context/context.service';
+import { SubcategoryService } from '../subcategory/subcategory.service';
 
 @Injectable()
 export class MainLocalService {
   constructor(
     @InjectRepository(MainLocal)
     private readonly repository: Repository<MainLocal>,
-    private readonly contextService: ContextService
+    private readonly contextService: ContextService,
+    private readonly subcategoriesService: SubcategoryService
   ) {}
   async create(createMainLocalDto: CreateMainLocalDto) {
     const user = this.contextService.userContext;
-   
+    const subCategory = await this.subcategoriesService.findOne(createMainLocalDto.subCategoryId)
     let createdMainLocal = new MainLocal();
-
     createdMainLocal=Object.assign(createMainLocalDto);
     createdMainLocal.user= user.user;
+    createdMainLocal.subcategories=[ subCategory]
 
     if(!createdMainLocal || !createdMainLocal.user)
       throw Error ("Error")
@@ -34,7 +36,7 @@ export class MainLocalService {
     return this.repository.find({where:{user:{id:id}}});
   }
   async findBySearch(searchMainLocalDto:SearchMainLocalDto) {
-    let query = this.repository.createQueryBuilder('mainLocal').leftJoinAndSelect('mainLocal.subcategories', 'subCategory')
+    let query = this.repository.createQueryBuilder('mainLocal').leftJoinAndSelect('mainLocal.subcategories', 'subCategories')
     .leftJoinAndSelect('mainLocal.events', 'event')
 
     if (searchMainLocalDto.name) {
@@ -45,10 +47,10 @@ export class MainLocalService {
       query = query.andWhere('mainLocal.location LIKE :location', { location: `%${searchMainLocalDto.location}%` });
     }
     if (searchMainLocalDto.event) {
-      query = query.andWhere('event.name  IN (:...name)', { name: `%${searchMainLocalDto.event}%` });
+      query = query.andWhere('event.name  IN :name', { name: `%${searchMainLocalDto.event}%` });
     }
     if (searchMainLocalDto.category) {
-      query = query.andWhere('subCategory.name IN (:...name)', { name: `%${searchMainLocalDto.category}%` });
+      query = query.andWhere('subCategories.name LIKE :name ', { name: `%${searchMainLocalDto.category}%` });
     }
 
     return query.getMany()||[];

@@ -4,12 +4,14 @@ import { UpdateDailyOfferDto } from './dto/update-daily-offer.dto';
 import { DailyOffer } from './entities/daily-offer.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ContextService } from 'src/core/context/context.service';
 
 @Injectable()
 export class DailyOfferService {
   constructor(
     @InjectRepository(DailyOffer)
     private readonly repository: Repository<DailyOffer>,
+    private readonly contextService: ContextService
   ) {}
   async create(createdailyOfferDto: CreateDailyOfferDto) {
     return this.repository.create(createdailyOfferDto);

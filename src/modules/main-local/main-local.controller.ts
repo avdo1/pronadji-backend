@@ -17,13 +17,13 @@ import { JWTGuard } from 'src/lib/guards/jwt.guard';
 export class MainLocalController {
   constructor(private readonly mainLocalService: MainLocalService) {}
 
+ 
   @UseGuards(JWTGuard)
   @Post()
   create(@Body() createMainLocalDto: CreateMainLocalDto) {
     return this.mainLocalService.create(createMainLocalDto);
   }
 
-  @UseGuards(JWTGuard)
   @Get()
   findAll() {
     return this.mainLocalService.findAll();
@@ -46,6 +46,7 @@ export class MainLocalController {
     return this.mainLocalService.findOne(id);
   }
 
+  @UseGuards(JWTGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -54,6 +55,7 @@ export class MainLocalController {
     return this.mainLocalService.update(id, updateMainLocalDto);
   }
 
+  @UseGuards(JWTGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.mainLocalService.remove(id);

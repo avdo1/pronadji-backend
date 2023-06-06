@@ -19,4 +19,6 @@ export class CreateMainLocalDto {
     twitter:string;
     @IsString()
     instagram:string;
+    @IsString()
+    subCategoryId:string;
 }

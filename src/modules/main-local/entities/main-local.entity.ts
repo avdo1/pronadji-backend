@@ -10,6 +10,8 @@ import {
   Column,
   OneToMany,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity()
@@ -62,6 +64,7 @@ export class MainLocal {
   })
   public user: User;
 
-  @OneToMany(() => Subcategory, (subcaterogy) => subcaterogy.mainLocal)
+  @ManyToMany(() => Subcategory, (subcaterogies) => subcaterogies.mainLocals)
+  @JoinTable()
   public subcategories: Subcategory[];
 }

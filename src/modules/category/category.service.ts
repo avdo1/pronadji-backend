@@ -1,26 +1,65 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Category } from './entities/category.entity';
+import { Repository } from 'typeorm';
+import { ContextService } from 'src/core/context/context.service';
+import { CategoryName } from 'src/common/types/catergory.types';
 
 @Injectable()
 export class CategoryService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  constructor(
+    @InjectRepository(Category)
+    private readonly repository: Repository<Category>,
+    private readonly contextService: ContextService
+  ) {}
+  async create(createCategoryDto: CreateCategoryDto) {
+    const user = await this.contextService.userContext.user;
+    if(!user)
+      throw Error('User not main adminstrator')
+    const categoryByName = await this.findOneByCategoryName(createCategoryDto.categoryName);
+    if(categoryByName)
+      throw Error('Category by this category name already exist')
+    try {
+      const category= await this.repository.create(createCategoryDto)
+      return this.repository.save(category);
+    } catch (error) {
+      throw Error(error)
+    }
+    
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAll() {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: string) {
+    return await this.repository.findOne({where:{id:id}});
+  }
+  
+  async findOneByCategoryName(categoryName:CategoryName) {
+    return await this.repository.findOne({where:{categoryName:categoryName}});
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    const user = await this.contextService.userContext.user;
+    if(!user)
+      throw Error('User not main adminstrator')
+    const categoryById = await this.findOne(id);
+    if(!categoryById)
+      throw Error('Category by this id dont exists')
+    const categoryByName = await this.findOneByCategoryName(updateCategoryDto.categoryName);
+    if(categoryByName)
+      throw Error('Category by this category name already exist')
+    const updateCategory= Object.assign(categoryById,updateCategoryDto)
+    return await this.repository.update(id,updateCategory);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: string) {
+    const user = await this.contextService.userContext.user;
+    if(!user)
+      throw Error('User not main adminstrator')
+    return await this.repository.delete(id)
   }
 }
