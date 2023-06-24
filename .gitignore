@@ -2,6 +2,9 @@
 .env
 *.env
 
+#keys
+private.pem
+public.pem
 # compiled output
 /dist
 /node_modules

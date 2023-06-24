@@ -1,26 +1,56 @@
 import { Injectable } from '@nestjs/common';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ContextService } from 'src/core/context/context.service';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User)
+    private readonly repository: Repository<User>,
+    private readonly contextService: ContextService,
+  ) {}
+ 
+ async getOneByEmail(email:string){
+    return this.repository.findOne({where:{email:email}})
+ }
+  async findAll() {
+    return this.repository.find();
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async getMe() {
+    const user = this.contextService.userContext.user;
+    
+    const userFromDatabase =
+      await this.repository.findOne({where:{email:user?.email}});
+    
+    return userFromDatabase;
+  } 
+  
+  async create(createUserDto: CreateUserDto) {
+    
+    const response =  this.repository.create(createUserDto);
+    if(!response) throw Error("Something wrong")
+
+    return this.repository.save(response);
+  }
+  async findOne(id: string) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const userFromDatabase = await this.repository.findOne({
+      where: { id: id },
+    });
+    const updatedUser = Object.assign(userFromDatabase, updateUserDto);
+    return this.repository.update(id, updatedUser);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const user = this.repository.findOne({ where: { id: id } });
+    return await this.repository.delete(id);
   }
 }

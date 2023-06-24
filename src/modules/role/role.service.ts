@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { Role } from './entities/role.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class RoleService {
-  create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
+  constructor(
+    @InjectRepository(Role)
+    private readonly repository: Repository<Role>,
+  ) {}
+  async create(createRoleDto: CreateRoleDto) {
+    const roleCreated = await this.repository.create(createRoleDto);
+    if(!roleCreated)throw Error('Errpr');
+    return await this.repository.save(roleCreated);
   }
 
-  findAll() {
-    return `This action returns all role`;
+  async findAll() {
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+  async findOne(id: number) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+  async update(id: number, updateUserDto: UpdateRoleDto) {
+    const roleFromDatabase = await this.repository.findOne({
+      where: { id: id },
+    });
+    const updatedUser = Object.assign(roleFromDatabase, updateUserDto);
+    return this.repository.update(id, updatedUser);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  async remove(id: number) {
+    const user = this.repository.findOne({ where: { id: id } });
+    return await this.repository.delete(id);
   }
 }

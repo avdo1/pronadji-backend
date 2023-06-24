@@ -1,19 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Event } from './entities/event.entity';
 
 @Injectable()
 export class EventService {
+  constructor(
+    @InjectRepository(Event)
+    private readonly repository: Repository<Event>,
+  ) {}
   create(createEventDto: CreateEventDto) {
-    return 'This action adds a new event';
+    return this.repository.create(createEventDto);
   }
 
   findAll() {
-    return `This action returns all event`;
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  findOne(id: string) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
   update(id: number, updateEventDto: UpdateEventDto) {

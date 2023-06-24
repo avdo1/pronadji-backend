@@ -22,6 +22,8 @@ import CustomConfigModule from './config/config.module';
 import configuration from './config/configuration';
 import { validate } from './common/validations/dbConfig.validation';
 import * as path from 'path';
+import { AuthModule } from './modules/auth/auth.module';
+import { User } from './modules/user/entities/user.entity';
 
 @Module({
   imports: [
@@ -52,6 +54,7 @@ import * as path from 'path';
     PhotographModule,
     PhotographsPhotoModule,
     SubcategoryModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
