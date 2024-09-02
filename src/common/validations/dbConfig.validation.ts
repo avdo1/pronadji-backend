@@ -37,6 +37,8 @@ class EnvironmentVariables {
 }
 
 export function validate(config: Record<string, unknown>) {
+  config.PORT = Number(config.PORT);
+  config.DB_PORT = Number(config.DB_PORT);
   const validatedConfig = plainToInstance(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });

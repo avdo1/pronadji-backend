@@ -6,7 +6,7 @@ config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors()
   await app.listen(4000);
   console.log('***********************');
   console.log('*   PROJECT STARTED   *');
