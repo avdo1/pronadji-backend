@@ -17,11 +17,11 @@ export class MainLocalService {
   ) {}
   async create(createMainLocalDto: CreateMainLocalDto) {
     const user = this.contextService.userContext;
-    const subCategory = await this.subcategoriesService.findOne(createMainLocalDto.subCategoryId)
+    // const subCategory = await this.subcategoriesService.findOne(createMainLocalDto.subCategoryId)
     let createdMainLocal = new MainLocal();
     createdMainLocal=Object.assign(createMainLocalDto);
     createdMainLocal.user= user.user;
-    createdMainLocal.subcategories=[ subCategory]
+    // createdMainLocal.subcategories=[ subCategory]
 
     if(!createdMainLocal || !createdMainLocal.user)
       throw Error ("Error")

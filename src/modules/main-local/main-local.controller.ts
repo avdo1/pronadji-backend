@@ -21,6 +21,7 @@ export class MainLocalController {
   @UseGuards(JWTGuard)
   @Post()
   create(@Body() createMainLocalDto: CreateMainLocalDto) {
+    console.log("BODY ", createMainLocalDto);
     return this.mainLocalService.create(createMainLocalDto);
   }
 
