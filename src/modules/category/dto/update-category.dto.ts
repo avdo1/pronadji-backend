@@ -1,10 +1,12 @@
+import { IsEnum, IsOptional, IsString } from "class-validator";
+import { CategoryName } from "src/common/types/catergory.types";
+import { Product } from "src/modules/product/entities/product.entity";
 
-import { IsEnum, IsString } from 'class-validator';
-import { CategoryName } from 'src/common/types/catergory.types';
-
-export class UpdateCategoryDto  {
-    @IsString()
-    descritption: string;
-    @IsEnum(CategoryName)
-    categoryName:CategoryName;
+export class UpdateCategoryDto {
+  @IsString()
+  description: string;
+  @IsEnum(CategoryName)
+  categoryName: CategoryName;
+  @IsOptional()
+  products: Product[];
 }

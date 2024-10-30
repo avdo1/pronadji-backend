@@ -1,48 +1,42 @@
-import { Gallery } from 'src/modules/gallery/entities/gallery.entity';
-import { MainLocal } from 'src/modules/main-local/entities/main-local.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Gallery } from "src/modules/gallery/entities/gallery.entity";
+import { MainLocal } from "src/modules/main-local/entities/main-local.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 
 @Entity()
 export class Event {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   public id: string;
 
-  @Column('text')
+  @Column("text")
   public name: string;
 
-  @Column('text')
+  @Column("text")
   public description: string;
 
-  @Column('integer')
+  @Column("integer")
   public enterPrice: number;
 
-  @Column('boolean')
+  @Column("boolean")
   public enterPriceConsumation: boolean;
 
-  @Column('date')
+  @Column("date")
   public startDate: Date;
 
-  @Column('date')
+  @Column("date")
   public entDate: Date;
 
-  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
   public startTime: Date;
 
-  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
   public endTime: Date;
 
-  @ManyToOne(() => MainLocal, (mainLocal) => mainLocal.events, {
-    onDelete: 'CASCADE',
+  @ManyToOne(() => MainLocal, mainLocal => mainLocal.events, {
+    onDelete: "CASCADE",
     cascade: true,
   })
   public mainLocal: MainLocal;
 
-  @OneToMany(() => Gallery, (gallery) => gallery.event)
+  @OneToMany(() => Gallery, gallery => gallery.event)
   public gallerys: Gallery[];
 }

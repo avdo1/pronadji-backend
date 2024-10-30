@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { ContextService } from 'src/core/context/context.service';
+import { Injectable } from "@nestjs/common";
+import { User } from "./entities/user.entity";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { ContextService } from "src/core/context/context.service";
 
 @Injectable()
 export class UserService {
@@ -13,27 +13,30 @@ export class UserService {
     private readonly repository: Repository<User>,
     private readonly contextService: ContextService,
   ) {}
- 
- async getOneByEmail(email:string){
-    return this.repository.findOne({where:{email:email}})
- }
+
+  async getOneByEmail(email: string) {
+    return this.repository.findOne({ where: { email: email } });
+  }
   async findAll() {
     return this.repository.find();
   }
 
   async getMe() {
     const user = this.contextService.userContext.user;
-    
-    const userFromDatabase =
-      await this.repository.findOne({where:{email:user?.email}});
-    
+
+    const userFromDatabase = await this.repository
+      .createQueryBuilder("user")
+      .leftJoinAndSelect("user.mainLocals", "mainLocal")
+      .select(["user", "mainLocal.id"])
+      .where("user.email = :email", { email: user?.email })
+      .getOne();
+
     return userFromDatabase;
-  } 
-  
+  }
+
   async create(createUserDto: CreateUserDto) {
-    
-    const response =  this.repository.create(createUserDto);
-    if(!response) throw Error("Something wrong")
+    const response = this.repository.create(createUserDto);
+    if (!response) throw Error("Something wrong");
 
     return this.repository.save(response);
   }

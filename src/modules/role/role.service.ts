@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
-import { Role } from './entities/role.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { CreateRoleDto } from "./dto/create-role.dto";
+import { UpdateRoleDto } from "./dto/update-role.dto";
+import { Role } from "./entities/role.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class RoleService {
@@ -13,7 +13,7 @@ export class RoleService {
   ) {}
   async create(createRoleDto: CreateRoleDto) {
     const roleCreated = await this.repository.create(createRoleDto);
-    if(!roleCreated)throw Error('Errpr');
+    if (!roleCreated) throw Error("Errpr");
     return await this.repository.save(roleCreated);
   }
 
