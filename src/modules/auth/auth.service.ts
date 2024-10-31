@@ -19,7 +19,6 @@ export class AuthService {
   async signup(data: SignUpDto) {
     const userExists = await this.userRepository.find({ where: { email: data.email, nickName: data.username } });
     const role = await this.roleRepository.findOne({ where: { id: data?.roleId } });
-    console.log(role);
     if (userExists?.length) {
       throw Error("User already exists");
     }

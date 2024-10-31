@@ -33,7 +33,6 @@ export class ProductService {
     const productFromDatabase = await this.repository.findOne({
       where: { id: id },
     });
-    console.log(productFromDatabase, "_+_+_++_+_", updateProductDto);
     if (!productFromDatabase) throw Error(`Product with this id doesn't exist`);
     const updatedProduct = Object.assign(productFromDatabase, updateProductDto);
     return this.repository.update(id, updatedProduct);

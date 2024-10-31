@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import * as _ from "lodash";
 import { AppConfigService } from "../../core/appConfig/appConfig.service";
 import { ContextService } from "../../core/context/context.service";
@@ -23,7 +23,7 @@ export class AdminOfLocalGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const authHeader = request?.headers?.authorization;
     const id = request.params?.id;
-    if (!authHeader) throw Error("Not logged in");
+    if (!authHeader) throw new HttpException("Not logged in", HttpStatus.UNAUTHORIZED);
 
     const token = this.jwtHelper.stripBearer(authHeader);
 
@@ -32,19 +32,19 @@ export class AdminOfLocalGuard implements CanActivate {
     const user = await this.repository.findOne({ where: { email: valid.sub as string }, relations: ["role", "mainLocals"] });
 
     if (!user) {
-      throw new AuthError.AuthNotAuthenticatedError();
+      throw new HttpException("User with this email not found", HttpStatus.NOT_FOUND);
     }
 
     request.user = { ..._.omit(user, "password") };
     this.contextService.userContext = { user: _.omit(user, "password") };
 
     if (user.role?.roleName !== RoleName.administrator && user.role?.roleName !== RoleName.mainAdministrator) {
-      throw new Error("User is not an administrator or main administrator");
+      throw new HttpException("User is not an administrator or main administrator", HttpStatus.FORBIDDEN);
     }
     const isAdminLocal = user?.mainLocals?.some(mainLocal => mainLocal.id === id);
 
     if (user?.mainLocals?.length === 0 || !isAdminLocal) {
-      throw new Error("User is not an administrator of this local");
+      throw new HttpException("User is not an administrator of this local", HttpStatus.FORBIDDEN);
     }
     return true;
   }

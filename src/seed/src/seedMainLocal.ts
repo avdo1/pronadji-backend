@@ -11,7 +11,7 @@ export const seedMainLocal = async (db): Promise<void> => {
   const mainLocalRepository = db.getRepository(MainLocal);
   await Promise.all(
     seedData.map(async data => {
-      let mainLocal = await mainLocalRepository.findOne({ where: { id: data.id } });
+      let mainLocal = await mainLocalRepository.findOne({ where: { name: data.name, id: data.id } });
       if (!mainLocal) {
         mainLocal = new MainLocal();
       }

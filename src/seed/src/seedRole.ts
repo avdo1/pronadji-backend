@@ -11,12 +11,12 @@ export const seedRole = async (db): Promise<void> => {
   const roleRepository = db.getRepository(Role);
   await Promise.all(
     seedData.map(async data => {
-      let role = await roleRepository.findOne({ where: { id: data.id } });
+      let role = await roleRepository.findOne({ where: { roleName: data.roleName } });
       if (!role) {
         role = new Role();
+        const roleItem = Object.assign(data);
+        return roleRepository.save(roleItem);
       }
-      const roleItem = Object.assign(data);
-      return roleRepository.save(roleItem);
     }),
   );
 };

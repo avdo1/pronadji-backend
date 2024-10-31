@@ -1,5 +1,5 @@
 export enum SubcatergoryName {
-  Kafa = "Kafa",
+  Kafic = "Kafic",
   Nargila = "Nargila",
   FastFood = "FastFood",
   NocniKlub = "Nocni klub",

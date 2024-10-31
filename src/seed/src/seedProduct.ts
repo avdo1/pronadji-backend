@@ -7,11 +7,11 @@ export const seedProduct = async (db): Promise<void> => {
   if (!count) {
     return;
   }
-  console.log("\x1b[33m%s\x1b[0m", `Seeding  (${count} product items)`);
+  console.log("\x1b[33m%s\x1b[0m", `Seeding Products (${count} product items)`);
   const productRepository = db.getRepository(Product);
   await Promise.all(
     seedData.map(async data => {
-      let product = await productRepository.findOne({ where: { id: data.id } });
+      let product = await productRepository.findOne({ where: { name: data.name } });
       if (!product) {
         product = new Product();
       }

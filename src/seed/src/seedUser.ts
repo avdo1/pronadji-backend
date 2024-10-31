@@ -11,7 +11,7 @@ export const seedUser = async (db): Promise<void> => {
   const userRepository = db.getRepository(User);
   await Promise.all(
     seedData.map(async data => {
-      let user = await userRepository.findOne({ where: { id: data.id } });
+      let user = await userRepository.findOne({ where: { email: data.email, id: data.id } });
       if (!user) {
         user = new User();
       }

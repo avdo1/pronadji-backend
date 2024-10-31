@@ -3,10 +3,10 @@ import { SubcatergoryName } from "src/common/types/subcategory.types";
 export const subCategorySeedData = [
   {
     id: "00000000-0000-2000-a000-000000000001",
-    name: SubcatergoryName.Kafa,
+    name: SubcatergoryName.Kafic,
     mainLocals: [
       {
-        mainlocalId: "00000000-0000-3000-a000-000000000001",
+        mainLocalId: "00000000-0000-3000-a000-000000000001",
       },
       {
         mainlocalId: "00000000-0000-3000-a000-000000000002",

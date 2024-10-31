@@ -8,10 +8,7 @@ export const userSeedData = [
     password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
     firstName: "Joe",
     lastName: "Rogan",
-    role: {
-      id: 1,
-      roleName: RoleName.administrator,
-    },
+    roleId: 1,
   },
   {
     id: "00000000-0000-4000-a000-000000000002",
@@ -20,10 +17,7 @@ export const userSeedData = [
     password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
     firstName: "Mark",
     lastName: "Hunt",
-    role: {
-      id: 3,
-      roleName: RoleName.mainAdministrator,
-    },
+    roleId: 2,
   },
   {
     id: "00000000-0000-4000-a000-000000000003",
@@ -32,10 +26,7 @@ export const userSeedData = [
     password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
     firstName: "Janny",
     lastName: "Janny",
-    role: {
-      id: 2,
-      roleName: RoleName.user,
-    },
+    roleId: 3,
   },
 ];
 

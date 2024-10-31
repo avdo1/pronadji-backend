@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import * as _ from "lodash";
 import { AppConfigService } from "../../core/appConfig/appConfig.service";
 import { ContextService } from "../../core/context/context.service";
@@ -21,7 +21,7 @@ export class JWTGuard implements CanActivate {
 
     const authHeader = request?.headers?.authorization;
 
-    if (!authHeader) throw Error("Not login");
+    if (!authHeader) throw new HttpException("Not logged in", HttpStatus.UNAUTHORIZED);
 
     const token = this.jwtHelper.stripBearer(authHeader);
 
@@ -30,7 +30,7 @@ export class JWTGuard implements CanActivate {
     const user = await this.repository.findOne({ where: { email: valid.sub as string } });
 
     if (!user) {
-      throw new AuthError.AuthNotAuthenticatedError();
+      throw new HttpException("User with this email not found", HttpStatus.NOT_FOUND);
     }
 
     request.user = { foo: "bar" };

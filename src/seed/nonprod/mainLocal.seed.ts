@@ -17,6 +17,7 @@ export const mainLocalSeedData = [
       password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
       firstName: "Joe",
       lastName: "Rogan",
+      roleId: 1,
     },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000001" }],
   },
@@ -31,14 +32,6 @@ export const mainLocalSeedData = [
     facebook: "www.facebook.com",
     instagram: "www.instagram.com",
     twitter: "www.twitter.com",
-    user: {
-      id: "00000000-0000-4000-a000-000000000001",
-      nickName: "Joe Rogan",
-      email: "joe.rogan@gmail.com",
-      password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
-      firstName: "Joe",
-      lastName: "Rogan",
-    },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000001" }],
   },
   {
@@ -52,14 +45,6 @@ export const mainLocalSeedData = [
     facebook: "www.facebook.com",
     instagram: "www.instagram.com",
     twitter: "www.twitter.com",
-    user: {
-      id: "00000000-0000-4000-a000-000000000001",
-      nickName: "Joe Rogan",
-      email: "joe.rogan@gmail.com",
-      password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
-      firstName: "Joe",
-      lastName: "Rogan",
-    },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000002" }],
   },
   {
@@ -73,14 +58,6 @@ export const mainLocalSeedData = [
     facebook: "www.facebook.com",
     instagram: "www.instagram.com",
     twitter: "www.twitter.com",
-    user: {
-      id: "00000000-0000-4000-a000-000000000001",
-      nickName: "Joe Rogan",
-      email: "joe.rogan@gmail.com",
-      password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
-      firstName: "Joe",
-      lastName: "Rogan",
-    },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000005" }],
   },
   {
@@ -94,14 +71,6 @@ export const mainLocalSeedData = [
     facebook: "www.facebook.com",
     instagram: "www.instagram.com",
     twitter: "www.twitter.com",
-    user: {
-      id: "00000000-0000-4000-a000-000000000001",
-      nickName: "Joe Rogan",
-      email: "joe.rogan@gmail.com",
-      password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
-      firstName: "Joe",
-      lastName: "Rogan",
-    },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000004" }],
   },
   {
@@ -115,14 +84,6 @@ export const mainLocalSeedData = [
     facebook: "www.facebook.com",
     instagram: "www.instagram.com",
     twitter: "www.twitter.com",
-    user: {
-      id: "00000000-0000-4000-a000-000000000001",
-      nickName: "Joe Rogan",
-      email: "joe.rogan@gmail.com",
-      password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
-      firstName: "Joe",
-      lastName: "Rogan",
-    },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000002" }],
   },
   {
@@ -136,14 +97,6 @@ export const mainLocalSeedData = [
     facebook: "www.facebook.com",
     instagram: "www.instagram.com",
     twitter: "www.twitter.com",
-    user: {
-      id: "00000000-0000-4000-a000-000000000001",
-      nickName: "Joe Rogan",
-      email: "joe.rogan@gmail.com",
-      password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
-      firstName: "Joe",
-      lastName: "Rogan",
-    },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000003" }],
   },
   {
@@ -157,14 +110,6 @@ export const mainLocalSeedData = [
     facebook: "www.facebook.com",
     instagram: "www.instagram.com",
     twitter: "www.twitter.com",
-    user: {
-      id: "00000000-0000-4000-a000-000000000001",
-      nickName: "Joe Rogan",
-      email: "joe.rogan@gmail.com",
-      password: "$2b$12$m7GWqn9WBI3AwDJNmlnqC.DoD1b4SC7z8Ev5E.cxhig8kEP5pW0O2",
-      firstName: "Joe",
-      lastName: "Rogan",
-    },
     subcategories: [{ subcategoryId: "00000000-0000-2000-a000-000000000008" }],
   },
 ];

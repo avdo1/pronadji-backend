@@ -11,7 +11,7 @@ export const seedCategory = async (db): Promise<void> => {
   const categoryRepository = db.getRepository(Category);
   await Promise.all(
     seedData.map(async data => {
-      let category = await categoryRepository.findOne({ where: { id: data.id } });
+      let category = await categoryRepository.findOne({ where: { categoryName: data.categoryName } });
       if (!category) {
         category = new Category();
       }
