@@ -1,4 +1,4 @@
-import * as path from 'path';
+import * as path from "path";
 const env = process.env.NODE_ENV;
 const p = path.join(process.cwd(), `${env}.env`);
 const dotEnvOptions = {

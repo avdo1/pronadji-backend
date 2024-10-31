@@ -1,8 +1,8 @@
-import _ from 'lodash';
-import base from '../base';
-import nonprod from '../nonprod';
-import prod from '../prod';
-export const isProd = () => ['p', 'u'].includes(process.env['ENV_NAME'] || 'a');
+import _ from "lodash";
+import base from "../base";
+import nonprod from "../nonprod";
+import prod from "../prod";
+export const isProd = () => ["p", "u"].includes(process.env["ENV_NAME"] || "a");
 
 let data;
 
@@ -10,7 +10,7 @@ export const getAllSeedData = (): Record<string, unknown[]> => {
   if (_.isUndefined(data)) {
     const env = isProd() ? prod : nonprod;
     const keys = new Set(Object.keys(base));
-    Object.keys(env).forEach((key) => keys.add(key));
+    Object.keys(env).forEach(key => keys.add(key));
 
     data = Array.from(keys).reduce((cfg, key) => {
       const baseData = base[key]?.data || [];

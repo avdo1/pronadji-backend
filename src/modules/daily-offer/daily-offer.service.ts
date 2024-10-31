@@ -1,24 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { CreateDailyOfferDto } from './dto/create-daily-offer.dto';
-import { UpdateDailyOfferDto } from './dto/update-daily-offer.dto';
-import { DailyOffer } from './entities/daily-offer.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ContextService } from 'src/core/context/context.service';
+import { Injectable } from "@nestjs/common";
+import { CreateDailyOfferDto } from "./dto/create-daily-offer.dto";
+import { UpdateDailyOfferDto } from "./dto/update-daily-offer.dto";
+import { DailyOffer } from "./entities/daily-offer.entity";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class DailyOfferService {
   constructor(
     @InjectRepository(DailyOffer)
     private readonly repository: Repository<DailyOffer>,
-    private readonly contextService: ContextService
   ) {}
   async create(createdailyOfferDto: CreateDailyOfferDto) {
-    return this.repository.create(createdailyOfferDto);
+    const createdDailyOffer = await this.repository.create(createdailyOfferDto);
+    const savedDailyOffer = await this.repository.save(createdDailyOffer);
+    return savedDailyOffer;
   }
 
   async findAll() {
     return this.repository.find();
+  }
+
+  async findAllByLocalId(id: string) {
+    let query = this.repository.createQueryBuilder("daily_offer").leftJoinAndSelect("daily_offer.products", "products");
+    if (id) {
+      query = query.where("daily_offer.mainLocalId = :id", { id: `${id}` });
+    }
+    return query.getMany() || [];
   }
 
   async findOne(id: string) {
@@ -29,12 +37,12 @@ export class DailyOfferService {
     const dailyOfferFromDatabase = await this.repository.findOne({
       where: { id: id },
     });
-    const updatedUser = Object.assign(dailyOfferFromDatabase, updateDailyOfferDto);
-    return this.repository.update(id, updatedUser);
+    const updatedDailyOffer = Object.assign(dailyOfferFromDatabase, updateDailyOfferDto);
+    return this.repository.update(id, updatedDailyOffer);
   }
 
   async remove(id: string) {
-    const user = this.repository.findOne({ where: { id: id } });
-    return await this.repository.delete(id);
+    const backendDailyOffer = await this.repository.findOne({ where: { id: id } });
+    return await this.repository.delete(backendDailyOffer.id);
   }
 }

@@ -1,6 +1,6 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';;
-import { UserContext } from './user.context';
+import { Inject, Injectable, Scope } from "@nestjs/common";
+import { REQUEST } from "@nestjs/core";
+import { UserContext } from "./user.context";
 
 @Injectable({ scope: Scope.REQUEST })
 export class ContextService {
@@ -12,8 +12,6 @@ export class ContextService {
       };
     }
   }
-
- 
 
   get apiVersion(): string | null | undefined {
     return this.request.context.apiVersion;
@@ -28,11 +26,8 @@ export class ContextService {
   }
 
   set userContext(userContext: UserContext) {
-    console.log('userContext',userContext)
     this.request.context.userContext = userContext;
   }
-
-  
 
   /* Custom methods */
   public addMeta(key: string, value: unknown) {

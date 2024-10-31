@@ -1,4 +1,4 @@
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
 
 export interface ConfigApiDocumentation {
   isEnabled: boolean;

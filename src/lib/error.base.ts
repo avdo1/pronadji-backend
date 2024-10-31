@@ -1,5 +1,5 @@
-import util from 'util';
-import deepmerge from 'deepmerge';
+import util from "util";
+import deepmerge from "deepmerge";
 export interface ErrorBase<T> extends Error {
   getName: () => string;
 
@@ -27,12 +27,7 @@ export interface ErrorBaseConstructor<T> {
   name: string;
 }
 
-function createError(
-  this: ErrorBase<any>,
-  name: string,
-  data?: object,
-  innerError?: Error,
-): void {
+function createError(this: ErrorBase<any>, name: string, data?: object, innerError?: Error): void {
   Error.captureStackTrace(this, this.constructor);
   this.name = name;
   (this as any).status = 400;
@@ -78,14 +73,14 @@ function createError(
 export class AppErrorBase {
   public static initErrors(this: any): void {
     // For each property
-    Object.keys(this).forEach((key) => {
+    Object.keys(this).forEach(key => {
       // Replace property with constructor function
       this[key] = function (data?: object, innerError?: Error): void {
         createError.call(this, key, data, innerError);
       };
 
       // Define property name on the constructor function
-      Object.defineProperty(this[key], 'name', {
+      Object.defineProperty(this[key], "name", {
         writable: true,
         value: key,
       });

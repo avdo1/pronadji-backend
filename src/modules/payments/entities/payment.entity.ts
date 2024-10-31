@@ -1,31 +1,25 @@
-import { User } from 'src/modules/user/entities/user.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { User } from "src/modules/user/entities/user.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity()
 export class Payment {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   public id: string;
 
-  @Column('date')
+  @Column("date")
   public fromDate: Date;
 
-  @Column('date')
+  @Column("date")
   public toDate: Date;
 
-  @Column('text')
+  @Column("text")
   public status: string;
 
-  @Column('text')
+  @Column("text")
   public paymentLevel: string;
 
-  @ManyToOne(() => User, (user) => user.payments, {
-    onDelete: 'CASCADE',
+  @ManyToOne(() => User, user => user.payments, {
+    onDelete: "CASCADE",
     cascade: true,
   })
   public user: User;

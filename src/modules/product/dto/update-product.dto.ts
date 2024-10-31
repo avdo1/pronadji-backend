@@ -1,12 +1,12 @@
 import { IsOptional } from "class-validator";
 
-export class UpdateProductDto  {
-    @IsOptional()
-    name:string;
-    @IsOptional()
-    descriprion:string;
-    @IsOptional()
-    price:number;
-    @IsOptional()
-    categortyId:string;
+export class UpdateProductDto {
+  @IsOptional()
+  name: string;
+  @IsOptional()
+  description: string;
+  @IsOptional()
+  price: number;
+  @IsOptional()
+  category: any;
 }
