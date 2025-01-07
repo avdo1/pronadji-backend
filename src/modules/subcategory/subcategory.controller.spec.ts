@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { SubcategoryController } from './subcategory.controller';
-import { SubcategoryService } from './subcategory.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { SubcategoryController } from "./subcategory.controller";
+import { SubcategoryService } from "./subcategory.service";
 
-describe('SubcategoryController', () => {
+describe("SubcategoryController", () => {
   let controller: SubcategoryController;
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('SubcategoryController', () => {
     controller = module.get<SubcategoryController>(SubcategoryController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

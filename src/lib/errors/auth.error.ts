@@ -1,5 +1,5 @@
-import { ErrorList } from '../../core/error/errorList.decoder';
-import { AppErrorBase, ErrorBaseConstructor } from '../../lib/error.base';
+import { ErrorList } from "../../core/error/errorList.decoder";
+import { AppErrorBase, ErrorBaseConstructor } from "../../lib/error.base";
 
 @ErrorList()
 export class AuthError extends AppErrorBase {

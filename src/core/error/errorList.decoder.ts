@@ -1,4 +1,4 @@
-export const ErrorListMetadataKey = 'ErrorList';
+export const ErrorListMetadataKey = "ErrorList";
 
 export interface ErrorListMetadata {
   targets: any[];

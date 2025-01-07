@@ -1,20 +1,13 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-  OneToMany,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from "typeorm";
 
 @Entity()
 export class Photograph {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   public id: string;
 
-  @Column('text')
+  @Column("text")
   public photographDescription: string;
 
-  @Column('date')
+  @Column("date")
   public date: Date;
 }

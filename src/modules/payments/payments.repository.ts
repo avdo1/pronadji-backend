@@ -1,8 +1,7 @@
-import { EntityRepository, Repository } from 'typeorm';
-import { Payment } from './entities/payment.entity';
+import { EntityRepository, Repository } from "typeorm";
+import { Payment } from "./entities/payment.entity";
 
 @EntityRepository(Payment)
 export class PaymentRepository extends Repository<PaymentRepository> {
-  protected tableName = 'payment';
-
+  protected tableName = "payment";
 }

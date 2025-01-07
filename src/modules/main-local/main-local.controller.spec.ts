@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { MainLocalController } from './main-local.controller';
-import { MainLocalService } from './main-local.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { MainLocalController } from "./main-local.controller";
+import { MainLocalService } from "./main-local.service";
 
-describe('MainLocalController', () => {
+describe("MainLocalController", () => {
   let controller: MainLocalController;
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('MainLocalController', () => {
     controller = module.get<MainLocalController>(MainLocalController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });
