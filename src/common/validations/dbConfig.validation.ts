@@ -37,36 +37,49 @@ class EnvironmentVariables {
 }
 
 export function validate(config: Record<string, unknown>) {
-  config.PORT = 4000;
-  config.DB_PORT = 5432;
+  // Konvertuj stringove u brojeve gdje je potrebno
+  if (typeof config.PORT === "string") {
+    config.PORT = parseInt(config.PORT, 10);
+  }
+  if (typeof config.DB_PORT === "string") {
+    config.DB_PORT = parseInt(config.DB_PORT, 10);
+  }
 
-  const testObj = {
-    DB_CONNECTION: "postgres",
-    DB_HOST: "localhost",
-    DB_USERNAME: "postgres",
-    DB_PASSWORD: "root",
-    DB_DATABASE: "postgres",
-    DB_PORT: 5432,
-    DB_ENTITIES: "dist/**/*.entity.js",
-    DB_MIGRATIONS: "dist/migrations/*.js",
-    PORT: 4000,
-    ENV_PREFIX: "dev",
-    NODE_ENV: "development",
+  // Postavi default vrijednosti samo ako ne postoje u env
+  const defaultConfig = {
+    NODE_ENV: process.env.NODE_ENV || "development",
+    PORT: process.env.PORT || 4000,
+    DB_HOST: process.env.DB_HOST,
+    DB_USERNAME: process.env.DB_USERNAME,
+    DB_PASSWORD: process.env.DB_PASSWORD,
+    DB_DATABASE: process.env.DB_DATABASE,
+    DB_PORT: process.env.DB_PORT || 5432,
+    DB_ENTITIES: process.env.DB_ENTITIES,
+    DB_MIGRATIONS: process.env.DB_MIGRATIONS,
   };
 
-  config = { ...config, ...testObj };
+  // Spoji konfiguracije, dajući prednost postojećim env varijablama
+  const mergedConfig = { ...defaultConfig, ...config };
 
-  const validatedConfig = plainToInstance(EnvironmentVariables, config, {
+  console.log("Environment configuration:", {
+    NODE_ENV: mergedConfig.NODE_ENV,
+    DB_HOST: mergedConfig.DB_HOST,
+    DB_DATABASE: mergedConfig.DB_DATABASE,
+    DB_PORT: mergedConfig.DB_PORT,
+  });
+
+  const validatedConfig = plainToInstance(EnvironmentVariables, mergedConfig, {
     enableImplicitConversion: true,
   });
 
-  console.log("dbconfig.validation.ts===============================", validatedConfig);
   const errors = validateSync(validatedConfig, {
     skipMissingProperties: false,
   });
-  console.log("dbconfig.validation.ts===============================errorr", errors);
+
   if (errors.length > 0) {
+    console.error("Validation errors:", errors);
     throw new Error(errors.toString());
   }
+
   return validatedConfig;
 }

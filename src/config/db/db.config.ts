@@ -7,11 +7,11 @@ const migrationPath = `${baseDir}${process.env.DB_MIGRATIONS}`;
 
 export default registerAs("database", () => ({
   type: "postgres",
-  host: "localhost",
-  username: "postgres",
-  password: "root",
-  database: "postgres",
-  port: 5432,
-  entities: ["dist/**/*.entity.js"],
-  migrations: ["dist/migrations/*.js"],
+  host: process.env.DB_HOST,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: parseInt(process.env.DB_PORT) || 5432,
+  entities: [process.env.DB_ENTITIES || "dist/**/*.entity.js"],
+  migrations: [process.env.DB_MIGRATIONS || "dist/migrations/*.js"],
 }));
