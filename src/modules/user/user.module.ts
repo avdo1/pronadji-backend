@@ -8,7 +8,7 @@ import { AppConfigService } from "src/core/appConfig/appConfig.service";
 import { JwtHelper } from "src/helpers/jwt.helper";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, UserService])],
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [UserService, ContextService, AppConfigService, JwtHelper],
 })

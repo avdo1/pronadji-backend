@@ -23,6 +23,7 @@ import configuration from "./config/configuration";
 import { validate } from "./common/validations/dbConfig.validation";
 import * as path from "path";
 import { AuthModule } from "./modules/auth/auth.module";
+import { databaseConfig } from "./config/database.config";
 
 @Module({
   imports: [
@@ -33,11 +34,7 @@ import { AuthModule } from "./modules/auth/auth.module";
       load: [configuration],
       validate,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (customConfigService: CustomConfigService) => customConfigService.getTypeORMDatabaseConfig(),
-      inject: [CustomConfigService],
-    }),
+    TypeOrmModule.forRoot(databaseConfig),
     UserModule,
     RoleModule,
     PaymentsModule,
